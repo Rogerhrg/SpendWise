@@ -3,7 +3,17 @@ import Budget from "../models/Budget"
 
 export class BudgetController {
     static getAll = async (req:Request, res:Response) => {
-        console.log('Desde Budgets get all')
+        try {
+            const budgets = await Budget.findAll({
+                order:[
+                    ['createdAt','DESC']
+                ]
+                // TODO: filtrar por usuario
+            })
+            res.json(budgets)
+        } catch (error) {
+            res.status(500).json({error:'Hubo un error'})
+        }
     }
 
     static create = async (req:Request, res:Response) => {
@@ -17,14 +27,17 @@ export class BudgetController {
     }
     
     static getById = async (req:Request, res:Response) => {
-        console.log('Desde Budgets get by id')
+        res.json(req.budget)
     }
     
     static updateById = async (req:Request, res:Response) => {
-        console.log('Desde Budgets update by id')
+        await req.budget.update(req.body)
+        res.json('Presupuesto actualizado correctamente')
+
     }
     
     static deleteById = async (req:Request, res:Response) => {
-        console.log('Desde Budgets delete by id')
+        await req.budget.destroy()
+        res.json('Presupuesto borrado correctamente')
     }
 }
