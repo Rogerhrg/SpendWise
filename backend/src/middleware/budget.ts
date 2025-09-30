@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { body, ExpressValidator, param, validationResult } from "express-validator"
+import { body, param, validationResult } from "express-validator"
 import Budget from "../models/Budget"
 
 declare global {
