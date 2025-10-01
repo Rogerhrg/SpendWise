@@ -32,7 +32,6 @@ export const validateBudgetExists = async (req:Request, res:Response, next:NextF
                 res.status(404).json({error:error.message})
             }
             req.budget = budget
-
             next()
         } catch (error) {
             res.status(500).json({error:'Hubo un error'})
