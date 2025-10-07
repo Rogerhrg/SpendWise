@@ -3,6 +3,7 @@ import { body, param } from "express-validator";
 import { handleInputErrors } from "../middleware/validation";
 import { AuthController } from "../controllers/AuthControllers";
 import { limiter } from "../config/limiter";
+import { checkAuth} from "../middleware/auth";
 
 const router = Router()
 
@@ -50,5 +51,7 @@ router.post('/reset-password/:token',
         .isLength({ min: 6 }).withMessage('El password debe ser de al menos 6 caracteres'),
     handleInputErrors,
     AuthController.resetPasswordWithToken)
+
+router.get('/', checkAuth)
     
 export default router
