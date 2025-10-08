@@ -49,7 +49,7 @@ export class AuthController {
             const error = new Error("El usuario no existe")
             return res.status(404).json({ error: error.message })
         }
-        if (user.confirmed) {
+        if (!user.confirmed) {
             const error = new Error("Tu cuenta no ha sido confirmada")
             return res.status(403).json({ error: error.message })
         }
@@ -59,6 +59,7 @@ export class AuthController {
             return res.status(401).json({ error: error.message })
         }
         const jwt = generateJWT(user.id)
+        res.json({token: jwt})
     }
 
     static forgotPassword = async (req:Request, res:Response) => {
@@ -102,6 +103,25 @@ export class AuthController {
         await user.save()
         res.json('Password modificado correctamente')
     }
-        
+    static userProfile = async (req:Request, res:Response) => {
+        const user = req.user
+        res.json(user)
+    }
 
+    static changePassword = async (req:Request, res:Response) => {
+        const { id } = req.user
+        const { current_password, new_password } = req.body
+        
+        const user = await User.findByPk(id)
+
+        const passwordCorrect = await verifyPassword(current_password, user.password)
+        if (!passwordCorrect) {
+            const error = new Error("El password actual es incorrecto")
+            return res.status(401).json({ error: error.message })
+        }
+
+        user.password = await hashPassword(new_password)
+        await user.save()
+        res.json('Password modificado correctamente')
+    }
 }

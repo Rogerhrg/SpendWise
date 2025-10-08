@@ -19,13 +19,13 @@ class User extends Model {
     })
     declare password: string
 
+    @Unique(true)
     @AllowNull(false)
     @Column({
         type: DataType.STRING(50)
     })
     declare email:string
 
-    @Unique(true)
     @Column({
         type: DataType.STRING(6)
     })

@@ -26,10 +26,10 @@ class Budget extends Model {
     declare expenses: Expense[]
 
     @ForeignKey(() => User)
-    declare budgetid: number
+    declare userId: number
 
     @BelongsTo(() => User)
-    declare budget: User
+    declare user: User
 }
 
 export default Budget

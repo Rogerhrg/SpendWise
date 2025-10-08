@@ -3,7 +3,7 @@ import Budget from "./Budget"
 
 
 @Table({
-    tableName:'expense'
+    tableName:'expenses'
 })
 
 class Expense extends Model {
@@ -20,7 +20,7 @@ class Expense extends Model {
     declare amount: number
 
     @ForeignKey(() => Budget)
-    declare budgetid: number
+    declare budgetId: number
 
     @BelongsTo(() => Budget)
     declare budget: Budget

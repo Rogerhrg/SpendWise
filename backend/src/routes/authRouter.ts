@@ -51,7 +51,15 @@ router.post('/reset-password/:token',
         .isLength({ min: 6 }).withMessage('El password debe ser de al menos 6 caracteres'),
     handleInputErrors,
     AuthController.resetPasswordWithToken)
-
-router.get('/', checkAuth)
     
-export default router
+    router.get('/', checkAuth, AuthController.userProfile)
+    
+    router.post('/change-password', checkAuth,
+        body('current_password')
+            .notEmpty().withMessage('El password actual es obligatorio'),
+        body('new_password')
+            .notEmpty().isLength({ min: 6 }).withMessage('El nuevo password debe ser de al menos 6 caracteres'),
+        handleInputErrors,
+        AuthController.changePassword)
+
+    export default router

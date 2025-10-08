@@ -4,8 +4,11 @@ import { handleInputErrors } from "../middleware/validation"
 import { validateBudgetExists, validateBudgetId, validateBudgetInput } from "../middleware/budget"
 import { validatExpenseExists, validateExpenseId, validateExpenseInput } from "../middleware/expense"
 import { ExpensesController } from "../controllers/ExpenseControllers"
+import { checkAuth } from "../middleware/auth"
 
 const router = Router()
+
+router.use(checkAuth)
 
 router.param('budgetId',validateBudgetId)
 router.param('budgetId',validateBudgetExists)

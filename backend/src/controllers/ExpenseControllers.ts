@@ -9,7 +9,7 @@ export class ExpensesController {
     static create = async (req: Request, res: Response) => {
         try {
             const expense = new Expense(req.body)
-            expense.budgetid = req.budget.id
+            expense.budgetId = req.budget.id
             await expense.save()
             res.status(201).json('Gasto creado correctamente')
         } catch (error) {
