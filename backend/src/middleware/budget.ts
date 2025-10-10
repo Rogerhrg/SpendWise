@@ -49,3 +49,11 @@ export const validateBudgetInput = async (req:Request, res:Response, next:NextFu
         .run(req)
     next()
 }
+
+export function hasAccessToBudget(req:Request, res:Response, next:NextFunction) {
+    if (req.budget.userId !== req.user.id) {
+        const error = new Error('No tienes permiso para realizar esta acción')
+        return res.status(401).json({ error:error.message })
+    }
+    next()
+}

@@ -9,7 +9,7 @@ export class BudgetController {
                 order:[
                     ['createdAt','DESC']
                 ]
-                // TODO: filtrar por usuario
+                ,where:{userId:req.user.id}
             })
             res.json(budgets)
         } catch (error) {

@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { BudgetController } from "../controllers/BudgetControllers"
 import { handleInputErrors } from "../middleware/validation"
-import { validateBudgetExists, validateBudgetId, validateBudgetInput } from "../middleware/budget"
+import { hasAccessToBudget, validateBudgetExists, validateBudgetId, validateBudgetInput } from "../middleware/budget"
 import { validatExpenseExists, validateExpenseId, validateExpenseInput } from "../middleware/expense"
 import { ExpensesController } from "../controllers/ExpenseControllers"
 import { checkAuth } from "../middleware/auth"
@@ -11,7 +11,8 @@ const router = Router()
 router.use(checkAuth)
 
 router.param('budgetId',validateBudgetId)
-router.param('budgetId',validateBudgetExists)
+router.param('budgetId',validateBudgetExists) 
+router.param('budgetId',hasAccessToBudget) 
 
 router.param('expenseId',validateExpenseId)
 router.param('expenseId',validatExpenseExists)
